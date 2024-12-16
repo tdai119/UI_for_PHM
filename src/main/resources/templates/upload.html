@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Upload Your File</h1>
+    <form action="/process" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Choose a file:</label>
+            <input type="file" id="file" name="file" required>
+        </div>
+        <div class="form-group">
+            <label for="minutil">Min Util:</label>
+            <input type="number" id="minutil" name="minutil" required>
+        </div>
+        <div class="form-group">
+            <label for="minper">Min Per:</label>
+            <input type="number" id="minper" name="minper" required>
+        </div>
+        <div class="form-group">
+            <label for="maxper">Max Per:</label>
+            <input type="number" id="maxper" name="maxper" required>
+        </div>
+        <div class="form-group">
+            <label for="minavgper">Min Avg Per:</label>
+            <input type="number" id="minavgper" name="minavgper" required>
+        </div>
+        <div class="form-group">
+            <label for="maxavgper">Max Avg Per:</label>
+            <input type="number" id="maxavgper" name="maxavgper" required>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+</div>
+
+<!-- Link to JS -->
+<script src="/static/scripts.js"></script>
+</body>
+</html>

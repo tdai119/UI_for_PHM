@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container">
+  <h1>Processing Results</h1>
+
+  <!-- Display the message from the controller -->
+  <p class="message" th:text="${message}"></p>
+
+  <h3>All periodic high-utility itemsets:</h3>
+  <ul class="output-preview">
+    <!-- Thymeleaf loop to display all lines in the "preview" list -->
+    <li th:each="line : ${preview}" th:text="${line}"></li>
+  </ul>
+
+  <div class="actions">
+    <p>Download the full results file here:</p>
+    <a th:href="@{/download(path=${outputPath})}" class="button">Download Results</a>
+  </div>
+</div>
+</body>
+</html>
