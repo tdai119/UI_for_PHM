@@ -29,8 +29,18 @@ public class FileUploadController {
 
     @GetMapping("/")
     public String index() {
+        checkUploadsDirectory();
         clearUploadsFolder();
         return "upload"; // Render the file upload form
+    }
+
+    private void checkUploadsDirectory() {
+        File directory = new File(uploadDir);
+        if (directory.exists()) {
+            System.out.println("Uploads directory exists: " + directory.getAbsolutePath());
+        } else {
+            System.out.println("Uploads directory does NOT exist: " + directory.getAbsolutePath());
+        }
     }
 
     private void clearUploadsFolder() {
