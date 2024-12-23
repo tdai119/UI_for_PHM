@@ -29,7 +29,22 @@ public class FileUploadController {
 
     @GetMapping("/")
     public String index() {
+        clearUploadsFolder();
         return "upload"; // Render the file upload form
+    }
+
+    private void clearUploadsFolder() {
+        File directory = new File(uploadDir);
+        if (directory.exists() && directory.isDirectory()){
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        file.delete();
+                    }
+                }
+            }
+        }
     }
 
     @PostMapping("/process")
