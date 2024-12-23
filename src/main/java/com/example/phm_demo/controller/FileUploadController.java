@@ -25,6 +25,7 @@ public class FileUploadController {
     public FileUploadController() {
         // Dynamically resolve the upload directory within the project directory
         this.uploadDir = new File("").getAbsolutePath() + File.separator + "uploads";
+        System.out.println("Upload directory resolved to: " + this.uploadDir);
     }
 
     @GetMapping("/")
@@ -76,17 +77,26 @@ public class FileUploadController {
             // Save uploaded file in the resolved directory
             File inputFile = new File(directory, file.getOriginalFilename());
             file.transferTo(inputFile);
+            System.out.println("Input file saved at: " + inputFile.getAbsolutePath()); //log
 
             // Run PHM algorithm
             String outputPath = uploadDir + File.separator + "output.txt";
+            System.out.println("PHM output file will be created at: " + outputPath); //log
             PHMAlgorithm.runPHM(inputFile.getAbsolutePath(), outputPath, minUtil, minPer, maxPer, minAvgPer, maxAvgPer);
+
+            // Verify if the output file was created
+            File outputFile = new File(outputPath);
+            if (!outputFile.exists()) {
+                throw new IOException("Output file not created: " + outputPath);
+            }
+            System.out.println("Output file created successfully: " + outputFile.getAbsolutePath());
 
             // Prepare model attributes for result display
             model.addAttribute("message", "File processed successfully!");
             model.addAttribute("outputPath", outputPath);
 
             // Get the entire output result and add to model for preview
-            List<String> resultPreview = Files.readAllLines(new File(outputPath).toPath());
+            List<String> resultPreview = Files.readAllLines(outputFile.toPath());
             model.addAttribute("preview", resultPreview); // Pass entire list, no subList limitation
 
         } catch (IOException e) {
@@ -103,6 +113,7 @@ public class FileUploadController {
 
             // Check if file exists
             if (!file.exists()) {
+                System.err.println("Requested file not found: " + filePath);
                 return ResponseEntity.notFound().build();
             }
 
@@ -117,6 +128,8 @@ public class FileUploadController {
                     .body(resource);
 
         } catch (Exception e) {
+            System.err.println("Error during file download: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
